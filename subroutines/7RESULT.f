@@ -1,0 +1,42 @@
+      SUBROUTINE RESULT
+C********************************************************************
+C
+C *** OUTPUTS DISPLACEMENT , REACTIONS AND STRESSES
+C
+C********************************************************************
+
+      COMMON/UNIM1/NPOIN,NELEM,NBOUN,NLOAD,NPROP,NNODE,IINCS,IITER,
+     *             KRESL,NCHEK,TOLER,NALGO,NSVAB,NDOFN,NINCS,NEVAB,
+     *             NITER,NOUTP,FACTO,PVALU
+     
+      COMMON/UNIM2/PROPS(5,5),COORD(26),LNODS(25,2),IFPRE(52),
+     *             FIXED(52),TLOAD(25,4),RLOAD(25,4),ELOAD(25,4),
+     *             MATNO(25),STRES(25,2),PLAST(25),XDISP(52),
+     *             TDISP(26,2),TREAC(26,2),ASTIF(52,52),ASLOD(52),
+     *             REACT(52),FRESV(1352),PEFIX(52),ESTIF(4,4)
+
+      IF(NDOFN.EQ.1) WRITE(6,900)
+  900 FORMAT(1H0,5X,'NODE',4X,'DISPL.',12X,'REACTIONS')
+     
+      IF(NDOFN.EQ.2) WRITE(6,910)
+  910 FORMAT(1H0,5X,'NODE',4X,'DISPL.',12X,'REACTION',
+     *       7X,'DISPL.',12X,'REACTION')
+     
+      DO 10 IPOIN=1,NPOIN
+   10 WRITE(6,920) IPOIN,(TDISP(IPOIN,IDOFN),TREAC(IPOIN,IDOFN),
+     *      IDOFN=1,NDOFN)
+    
+ 920  FORMAT(I10,2(E14.6,5X,E14.6))
+          IF(NDOFN.EQ.2) WRITE(6,930)
+    
+ 930  FORMAT(1H0,2X,'ELEMENT',12X,'STRESSES',12X,'PL.STRAIN')
+          IF(NDOFN.EQ.1) WRITE(6,940)
+    
+ 940  FORMAT(1H0,2X,'ELEMENT',5X,'STRESSES',5X,'PL.STRAIN')
+          DO 20 IELEM=1,NELEM
+  20  WRITE(6,950) IELEM,(STRES(IELEM,IDOFN),IDOFN=1,NDOFN),
+     *      PLAST(IELEM)
+    
+ 950  FORMAT(I10,3E14.6)
+      RETURN
+      END
