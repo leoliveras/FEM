@@ -3,136 +3,34 @@
 *!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 C All variable names are chosen to be 5 characters in length!
+
 C
 C NMATS ---> Number of different MATerialS
+
 C PROPS ( ) ---> Array of material PROPertieS
+
 C NEVAB ---> Number of Element VAriaBles
+
 C NNODE ---> Number of NODes per Elernent
+
 C NDOFN ---> Number of Degrees Of Freedorn per Node
 
 C A ‘common root' principle is adopted
+
 C A single variable is employed with different prefixes depending on its
 
 C   i)   Prefix I, J or L will be used to indicate a DO loop variable
+
 C   ii)  Prefix K will indicate a counter
+
 C   iii) Prefix M will indicate a maximurn value
+
 C   iv)  Prefix N will indicate a given number
+
 C   For example:
+
 C IPOIN ---> a particular nodal point
+
 C NPOIN ---> number of nodal points in the problem
+
 C MPOIN ---> maximum permissible number of nodal points in the program
-
-
-C************************************************************************************************************
-C**************   Geometry of the structure and the support conditions   ************************************
-C************************************************************************************************************
-C
-C NPOIN Total number of nodal points in the structure.
-
-C NELEM Total number of elements in the structure.
-
-C NBOUN Total number of boundary points, i.e. nodal points at which the value of the unknown
-C       is prescribed. In this context an internal node can be a boundary node.
-
-C NMATS Total number of different materials in the structure.
-
-C NPROP The number of material parameters required to define the characteristics of a material completely:
-C       4-For elasto-plastic problems,
-C       2-For all other applications.
-
-C NNODE Number of nodes per element. For linear displacement onedimensional elements this equals 2.
-
-C NINCS The number of increments in which the total loading is to be applied.
-
-C NALGO Indicator used to identify the type of solution algorithm to be employed:
-        !   l-Direct iteration
-        !  2-Newton-Raphson method for quasi-harmonic problems. Tangential stiffness method 
-        !  for structural problems (nonlinear elastic and elasto-plastic situations).
-        !  3-Initial stiffness method.
-        !  4-Combination of the initial and tangential stiffness methods,where the 
-        !  stiffnesses are recalculated on the first iteration of aload increment only.
-        !  5-Combination of the initial and tangential stiffness methods,
-        !  where the stiffnesses are recalculated on the second iteration of
-        !  a load increment only. This can aid the rate of convergence
-        !  considerably, if on the application of an increment of load
-        !  there is substantial further yielding. When calculating the
-        !  element stiffnesses the total plastic strains evaluated during
-        !  the previous iteration are used to indicate whether the element
-        !  has yielded or not. If the elerhent stiffnesses are recalculated on
-        !  the first iteration, the elements which have now yielded may
-        !  have been elastic at the end of the orevious load increment and
-        !  behaviour. This can reduce the convergence rate of the process
-        !  since generally, whereas the elastic stiffness depends linearly on E. 
-        !  Hence the tangential stiffness calculated grossly overestimates the true material
-        !  response. This problem can be alleviated by reformulating the
-        !  element stiffnesses during the second iteration of a load increment 
-        !  rather than the first, since the plastic strain evaluated on
-        !  the :first iteration will indicate yielding to have initiated
-
-C NDOFN The number of degrees of freedom per nodal point:
-C l-For uniaxial problems.
-C 2-For beam' bending problems (considered in Chapter 5).
-
-C For the one-dimensional situation being currently considered, the
-C position of each nodal point is completely defined by a single coordinate
-C whose value will be stored in the array
-C COORD (IPOIN)
-C IPOIN corresponds to the number of the nodal point
-
-
-C LNODS (NUMEL, INODE) the element topology is read into this array
-C NUMEL corresponds to the number of the element under consideration 
-C INODE ranges from 1 to NNODE
-
-
-C************************************************************************************************************
-C*******************************   Material properties   ****************************************************
-C************************************************************************************************************
-
-C MATNO (NUMEL) each element may conceivably be assigned different material properties,
-C               so that element number NUMEL has material properties of type MATNO (NUMEL).
-
-C PROPS (NUMAT, IPROP) the same array wiLL be employed for the material properties required for solution
-C NUMAT denotes the material identification number
-C IPROP the individual property. 
-
-
-C (a) Quasi-harmonic problems
-C     PROPS (NUMAT, l)-The reference value Ko of the coefficient K 
-C     PROPS (NUMAT, 2)-The constant b for a linear ‘stiffness' variation.
-C (b) Nonlinear elastic problems
-C     PROPS (NUMAT, l)-The reference value Eo
-C     PROPS (NUMAT, 2)-The cross-sectional area A, of the element. Each
-C                      element with a different cross-sectional area must 
-C                      be assigned a different material property number.
-C (c) Elasto-plastic problems
-C     PROPS (NUMAT, 1)-The elastic modulus, E, of the material.
-C     PROPS (NUMAT, 2)-The cross-sectional area, A, of the element.
-C     PROPS (NUMAT, 3)-The uniaxial yield stress of the material.
-C     PROPS (NUMAT, 4)-The linear strain hardening parameter, H', for the material 
-
-C NODFX temporary variable that describe any nodal points at which a degree of freedom has a prescribed value
-C ICODE (IDOFN) entries in the array that determine which degrees of freedom are to be prescribed at this node
-C               Variable IDOFN ranges over the number of degrees of freedom per node NDOFN. 
-C               NDOFN = 1 -> degree of freedom IDOFN at node NODFX has a prescribed value
-C               NCODE = 0 -> degree of freedom IDOFN at node NODFX is a free variable.
-C VALUE (IDOFN) value for a prescribed degree of freedom (if ICODE (IDOFN) =0, then VALUE (IDOFN) is ignored)
-
-CTo simplify solution process, information stored in arrays ICODE and VALUE is transferred to much larger arrays:
-C IFPRE (NPOSN) --> NPOSN ranges over all the degrees of freedom for the whole finite element mesh,
-C                   unit entries in IFPRE indicate that the associated variable is prescribed
-C PEFIX (NPOSN) --> Position in PEFIX corresponding to the prescribed value 
-
-
-
-C************************************************************************************************************
-C**************************  Frontal method of equαtion solution   ******************************************
-C************************************************************************************************************
-
-C RLOAD (IELEM, IEVAB) Array that specify the nodal loads acting on the two nodes associated with the element 
-C IELEM indicates the element number 
-C IEVAB relates to the degrees of freedom of the element --> IEVAB = 1 to NEVAB (number of element variables)
-C                         
-C ELOAD (IELEM, IEVAB) Array at wich the loads are transferred to, before entering the solution routines 
-
-
