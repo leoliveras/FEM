@@ -4,7 +4,7 @@
 
 C All variable names are chosen to be 5 characters in length!
 
-C
+
 C NMATS ---> Number of different MATerialS
 
 C PROPS ( ) ---> Array of material PROPertieS
