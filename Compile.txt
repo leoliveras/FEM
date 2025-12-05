@@ -1,4 +1,0 @@
-
-----------------------------------------------------------------------------------
-
-gfortran -std=legacy -ffixed-form 1DATA.f 2NONAL.f 3ASSEMB.f 4GREDUC.f 5BAKSUB.f 6RESOLV.f 7RESULT.f 8INITAL.f 9INCLOD.f 10STUNVP.f 11INCVP.f 12CONVP.f MAIN.f -o program.exe
