@@ -5,7 +5,16 @@ SUBROUTINE INCLOD
 ! *** INPUTS DATA FOR CURRENT INCREMENT AND UPDATES LOAD VECTOR
 !***********************************************************************
      
-    read(1,*)label, NSTEP,label, NOUTP,label, FACTO,label,TOLER
+    if (EPATH == 0 .AND. IINCS <= NINCS) then
+        read(1,*)label, NSTEP,label, NOUTP,label, FACTO,label,TOLER
+    end if
+    
+    if (EPATH == 1 .AND. IINCS == 1) then
+         read(1,*)label, NSTEP,label, NOUTP,label, FACTO,label,TOLER
+    end if
+    
+    !if (IINCS == 10000) call RESULT
+    if (IINCS == 10000 .OR. IINCS == NINCS + 1) call RESULT
     
 !  WRITE PARAMETERS
    write(*,'(///,1X,"IINCS =",I5,3X,"NSTEP =",I5,3X,"NOUTP =",I5, &
