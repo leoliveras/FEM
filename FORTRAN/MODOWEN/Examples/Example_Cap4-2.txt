@@ -10,6 +10,7 @@ NINCS: 7
 NALGO: 3
 NDOFN: 2
 HALGO: 1
+EPATH: 0
 **
 ***Properties
 **
