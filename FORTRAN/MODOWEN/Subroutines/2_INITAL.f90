@@ -11,10 +11,10 @@ SUBROUTINE INITAL
     allocate(FIXED(NSVAB)); FIXED = 0.d0;  
 
     !Local                                     
-    allocate(ESTIF(NEVAB,NEVAB)); ESTIF = 0.d0;
+    allocate(ESTIF(NELEM,NEVAB,NEVAB)); ESTIF = 0.d0;
 
     !Global
-    allocate(ASLOD(NSVAB)); ASLOD = 0.d0;            
+    allocate(ASLOD(NSVAB)); ASLOD = 0.d0;  
     allocate(ASTIF(NSVAB,NSVAB)); ASTIF = 0.d0;      
                                        
     !Displacements and forces
@@ -61,8 +61,11 @@ SUBROUTINE INITAL
     Allocate(indx(NSVAB)); indx = 0.d0
     Allocate(ipiv(NSVAB)); ipiv = 0
     Allocate(vv(NSVAB)); vv = 0.d0
-    Allocate(a1(NSVAB,NSVAB)); a1 = 0.d0
-    Allocate(b(NSVAB)); b = 0.d0
+    !Allocate(a(NSVAB,NSVAB)); a = 0.d0
+    !Allocate(b(NSVAB)); b = 0.d0
+    !allocate(U(NSVAB)); U = 0.0d0
+    !allocate(Fint(NSVAB)); Fint = 0.0d0
+    !allocate(ASLOD0(NSVAB)); ASLOD0 = 0.d0; 
 
     !Incidence index vector
     allocate(ISDOF(NELEM*NNODE)); ISDOF = 0.d0;     
@@ -74,11 +77,18 @@ SUBROUTINE INITAL
     
     
     !Sparse matrix assembly
-    allocate(COEFF(NELEM)); COEFF = 0.d0
-    allocate(GADOF(NELEM, NNODE*NDOFN)); GADOF = 0.d0
     allocate(ISPAR(NTERM)); ISPAR = 0.d0
     allocate(JSPAR(NTERM)); JSPAR = 0.d0
     allocate(VSPAR(NTERM)); VSPAR = 0.d0
+
+    
+    !Convergence parameters
+    allocate(STFOR(NSVAB)); STFOR = 0.d0
+    allocate(TOFOR(NSVAB)); TOFOR = 0.d0
+    
+    !Path
+    allocate(UNODE(MINCS)); UNODE = 0.d0
+    allocate(RFOOT(MINCS)); RFOOT = 0.d0
 
     RETURN
 END SUBROUTINE INITAL
