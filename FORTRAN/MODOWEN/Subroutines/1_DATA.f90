@@ -6,7 +6,8 @@ SUBROUTINE DATA
 !Read data file
 !**************************************************************************************************
 
-open(1, file="./Example_cap4-2.txt", STATUS="old")
+open(1, file="./Example_Cap3.2-8.txt", STATUS="old")
+
 
 !**************************************************************************************************
 !**************   Geometry of the structure and the support conditions   **************************
@@ -25,6 +26,9 @@ open(1, file="./Example_cap4-2.txt", STATUS="old")
     Read(1,*)label,NALGO
     Read(1,*)label,NDOFN
     Read(1,*)label,HALGO
+    Read(1,*)label,EPATH
+    
+    MINCS=NINCS
 
     write(*,'(//,1X,"NPOIN =",I5,3X,"NELEM =",I5,3X,"NBOUN =",I5,3X,&
                     "NMATS =",I5,3X,"NPROP =",I5,3X,"NNODE =",I5,3X,&
@@ -137,7 +141,7 @@ open(1, file="./Example_cap4-2.txt", STATUS="old")
     allocate(ICODE(NDOFN));ICODE=0
     do IBOUN = 1, NBOUN
         read(1,*) NODFX, ICODE(1:NDOFN), VALUE(1:NDOFN)
-        Write(*,'(I10,1X,I5,5X,F15.5,5X,I5,5X,F15.5))') NODFX, (ICODE(i), VALUE(i),i=1,NDOFN)
+        Write(*,'(I10,1X,I5,5X,F15.5,5X,I5,5X,F15.5)') NODFX, ((ICODE(IDOFN), VALUE(IDOFN)),IDOFN=1,NDOFN)
 !     In order to simplify the solution process, the information stored in arrays 
 !     ICODE and VALUE is transferred to much larger arrays IFPRE (NPOSN) and PEFIX (NPOSN) respectively 
 !     NPOSN --> ranges over all the degrees of freedom for the whole finite element mesh
