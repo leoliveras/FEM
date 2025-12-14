@@ -10,6 +10,7 @@ NINCS: 1
 NALGO: 3
 NDOFN: 2
 HALGO: 2
+EPATH: 0
 **
 ***Properties
 **
@@ -41,5 +42,5 @@ TAUFT: 0.05
 DTINT: 0.025
 FTIME: 1.5
 **
-NSTEP: 90		NOUTP: 1		FACTO: 1.0			TOLER: 0.05			
+NSTEP: 90		NOUTP: 2		FACTO: 1.0			TOLER: 0.05			
 ***
