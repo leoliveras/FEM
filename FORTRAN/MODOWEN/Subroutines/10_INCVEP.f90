@@ -5,7 +5,7 @@ SUBROUTINE INCVEP
 !******* SETS INDICATOR TO IDENTIFY NONLINEAR MATERIAL  TYPE ***********
 !***********************************************************************
 
-   if (HRESL == 0) CALL REFOR
+   if (HRESL == 0) CALL REDFOR
    
    if (HRESL == 1) CALL INCVE
    
