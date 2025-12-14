@@ -1,18 +1,21 @@
-PROGRAM MASTER 
+PROGRAM MASTER
     use COMMON
     implicit none
+
 !***********************************************************************
-! *** PROGRAM FOR TRUSS SOLUTION OF NONLINEAR PROBLEMS
+! *** PROGRAM FOR THE TRUSS SOLUTION OF NONLINEAR PROBLEMS
 !***********************************************************************
 
+    ! --- START OF TIME MEASUREMENT ---
+    call system_clock(CLOK1, RATE1)
+    ! ---------------------------------
 
-   TTIME = 0.0d0
+    TTIME = 0.0d0
 
-  ! open(unit=10, file="Ex_Cap4-2.txt", status="old")
-   call DATA
-   call INITAL
+    call DATA
+    call INITAL
 
-   do IINCS = 1, NINCS
+    do IINCS = 1, MINCS
         call INCLOD
         DTIME = 0.0d0
 
@@ -21,11 +24,18 @@ PROGRAM MASTER
             call NONAL
             if (KRESL == 1) call STIFF
             call ASSEMB
+            
+            !For lapack resolution
+            !call DGESV( NSVAB, 1, ASTIF, NSVAB, ipiv, ASLOD, NSVAB, info )
+            !call LAPACK
+            
+            !For gauss elimination resolution
             if (KRESL == 1) call GREDUC
             if (KRESL == 2) call RESOLV
             call BAKSUB
+            
             call INCVEP
-            call CONVP
+            call CONVEP
 
             if (NCHEK == 0) then
                 call RESULT
@@ -41,7 +51,12 @@ PROGRAM MASTER
             stop
         end if
     end do
+
+    ! --- END OF TIME MEASUREMENT ---
+    call system_clock(CLOK2)
+    ELAPSE = real(CLOK2 - CLOK1, 8) / real(RATE1, 8)
+    print *, "CPU TIME (s) = ", ELAPSE
+    ! ---------------------------------
+
     stop
 END PROGRAM MASTER
-
-     
