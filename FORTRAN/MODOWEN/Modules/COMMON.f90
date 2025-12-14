@@ -10,10 +10,13 @@
         integer(4)::NMATS=0                
         integer(4)::NPROP=0                 
         integer(4)::NNODE=0                 
-        integer(4)::NINCS=0                
+        integer(8)::NINCS=0                
         integer(4)::NALGO=0                 
         integer(4)::NDOFN=0  
         integer(4)::HALGO=0
+        integer(4)::EPATH=0
+        integer(4)::MINCS=0
+        
 
 !**************************************************************************************************
 !***DATA
@@ -54,7 +57,7 @@
 !***INITIALIZATION
 !**************************************************************************************************
 
-        real(8),Allocatable::ESTIF(:,:)  
+        real(8),Allocatable::ESTIF(:,:,:)  
         real(8),Allocatable::ASTIF(:,:)   
         real(8),Allocatable::COEFF(:);
         real(8),Allocatable::teste(:,:)
@@ -100,7 +103,11 @@
         real(8)::RINTL=0.d0               
         real(8)::RCURR=0.d0               
         real(8)::PVALU=0.d0                
-        real(8)::RATIO=0.d0                           
+        real(8)::RETOT=0.d0  
+        real(8)::REFOR=0.d0  
+        real(8)::RATIO=0.d0  
+        real(8),allocatable::STFOR(:)
+        real(8),allocatable::TOFOR(:)
                                             
                                         
 !**************************************************************************************************
@@ -129,6 +136,10 @@
         ! Time parameters
         real(8)::DNEXT,DTIME,DELTA,EDISP,SNTOT,DELTM,DELTN,DELTD,TTIME
         real(8),allocatable::VIVEL(:)
+        
+        !Nonlinear elasticity       
+        real(8)::PTRAN=0.d0
+        real(8)::STRCH=0.d0
 
         !Viscoplastic
         real(8),Allocatable::PLAST(:)
@@ -151,6 +162,7 @@
         real(8),allocatable::LASTS(:)
         real(8),allocatable::LASTF(:)
         real(8),allocatable::CREPS(:)
+
     
         
         
@@ -180,12 +192,17 @@
 
         integer(4)::IMATS,IPROP,INODE,IELEM,ISVAB,IEVAB,IBOUN,IDOFN,ILOAD,ISTEP,IPOIN,IINCS,ITERM,&
                     IEQNS,IROWS,ICOLS,&
-                    NROWS,NROWE,NCOLS,NCOLE,NTERM,NEQNS,NLOCA,NSTEP,&
-                    JNODE,JDOFN,&
+                    NROWS,NROWE,NCOLS,NCOLE,NTERM,NEQNS,NLOCA,NSTEP,NODNO, &
+                    JNODE,JDOFN,JINCS, &
                     NODE1,NODE2,NODEI,NODEJ,NODFX,XPOIN,YPOIN,INDEX,FSVAB
         
         character(20) :: label
         character(10),allocatable :: LABELS(:,:) 
+        
+        
+!**************************************************************************************************
+!***SPARSE ASSEMBLY
+!**************************************************************************************************
         
         integer,allocatable::ISDOF(:)
         integer,allocatable::FSDOF(:)
@@ -196,6 +213,19 @@
         real(8),allocatable::VSPAR(:)
         integer,allocatable::GAPRE(:)
         
+                                                    
+                                        
+!**************************************************************************************************
+!***OMP AND EQUILIBRIUM PATH
+!**************************************************************************************************
+        integer(4) :: IMODE
+        integer(4) :: FUNIT, GUNIT   !for reads e writes // inputs, outputs
+        real(8),allocatable::RFOOT(:)
+        real(8),allocatable::UNODE(:)
+        integer(4) :: STOP1
+        character(len=30) :: FNAME
         
-
+        integer(4) :: CLOK1, CLOK2, RATE1
+        real(8) :: ELAPSE
+        
 END MODULE COMMON
