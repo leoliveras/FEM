@@ -1,0 +1,53 @@
+***Global parameters:
+**
+NPOIN: 3
+NELEM: 2
+NBOUN: 3
+NMATS: 1
+NPROP: 2
+NNODE: 2
+NINCS: 2.d4
+NALGO: 2
+NDOFN: 2
+HALGO: 0
+EPATH: 1
+**
+***Properties
+**
+    MATERIAL: 1
+    AREA: 1.0, YOUNG: 20000.0, YIELD: 0.0, HARDS: 0.0, GAMMA: 0.0, YONG0: 0.0, GAMA1: 0.0, YONG1: 0.0		
+**
+***Assembly
+**
+    1     1       1    2   
+    2     1       2    3   
+**
+**
+         1      000.0            0.0 
+         2     1250.0          100.0
+         3     2500.0            0.0
+**
+***Boundary
+**Node_Id   dx_Id            dx
+	1      	1	1       0.00	0.00	
+	2		0	1		0.00 -200.00
+    3		1	1		0.00	0.00
+**
+***Load
+**
+NLOAD: 0
+**Element		     Node1		                     Node 2
+**
+***Time control
+**
+TAUFT: 0.0					 
+DTINT: 0.0
+FTIME: 0.0
+**
+NSTEP: 900		NOUTP: 1		FACTO: 1.d-4	    TOLER: 0.1
+NSTEP: 90		NOUTP: 1		FACTO: 10.0			TOLER: 0.1
+NSTEP: 90		NOUTP: 1		FACTO: 10.0			TOLER: 0.1
+NSTEP: 90		NOUTP: 1		FACTO: 10.0			TOLER: 0.1
+NSTEP: 90		NOUTP: 1		FACTO: 10.0			TOLER: 0.1
+NSTEP: 90		NOUTP: 1		FACTO: 10.0			TOLER: 0.1
+***
