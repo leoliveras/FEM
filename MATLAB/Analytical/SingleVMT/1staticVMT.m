@@ -58,4 +58,5 @@ fid = fopen('path.txt', 'w');
 for k = 1:n
     fprintf(fid, '%.1f %.10f\n', L(k,1), L(k,2));
 end
+
 fclose(fid);
