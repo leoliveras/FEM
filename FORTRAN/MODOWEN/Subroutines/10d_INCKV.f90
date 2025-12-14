@@ -28,7 +28,7 @@ SUBROUTINE INCKV
      
         VIVEL(IELEM) = GAMA1(IELEM) * (STRES(IELEM)-(YONG0(IELEM)*FLUEN(IELEM)))
 
-!C***  Limiting time-step lenght 
+!    ***  Limiting time-step lenght 
           DELTA = DISP2-DISP1
           EDISP = EDISP + DELTA
           SNTOT = (EDISP) / ELENG(IELEM)
@@ -47,4 +47,5 @@ SUBROUTINE INCKV
         ELOAD(IELEM,4) =  FACTR*SALFA(IELEM)
     end do
     ELOAD = ELOAD + TLOAD
+
 END SUBROUTINE INCKV
