@@ -9,10 +9,8 @@ SUBROUTINE ASSEMB
     ASLOD = 0.d0
     
 !   ASSEMBLE THE ELEMENT LOADS
-    rewind(10)
 
     do IELEM = 1, NELEM
-          read(10) ESTIF
 
           do INODE = 1, NNODE
                 NODEI = LNODS(IELEM, INODE)
@@ -29,7 +27,7 @@ SUBROUTINE ASSEMB
                                   NCOLS = (NODEJ - 1) * NDOFN + JDOFN
                                   NCOLE = (JNODE - 1) * NDOFN + JDOFN
                                   ASTIF(NROWS, NCOLS) = ASTIF(NROWS, NCOLS) + &
-                                                    ESTIF(NROWE, NCOLE)
+                                                    ESTIF(IELEM,NROWE, NCOLE)
                             end do
                       end do
                 end if
