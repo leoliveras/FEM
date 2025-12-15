@@ -12,7 +12,7 @@ JobName2 = 'VMTRS_job2';
 numCPU = 1;
 
 % User and Work Folders
-inputFolder = 'C:\Users\loesf\OneDrive\Documents\MATLAB';  
+inputFolder = 'C:\Users\LOESF\OneDrive\Documents\Truss_Element\ML\TESTE\MATLAB';   
 tempFolder  = 'C:\temp';  %this is the work Folder used by abaqus
 
 if ~exist(inputFolder,'dir'); mkdir(inputFolder); end
@@ -100,7 +100,7 @@ while SubmitWork || SubmitWork2
 % the criteria for determining the end of the monitoring loop.
 
     % Check .lck — to indicate that the job1 is working
-    if exist([JobName1, '.lck'], 'file') == 2 && SubmitWork
+    if exist([JobName1, '.lck'], 'file') ~= 2 && SubmitWork
         disp(['Job ', JobName1, ' finalizado by terminate']);
         cmd2 = sprintf('abaqus job= %s terminate', JobName1);
         SubmitWork = 0;
@@ -155,7 +155,7 @@ while SubmitWork || SubmitWork2
                 end
 
                 % Check .lck — to indicate that the job1 is working
-                if exist([JobName2, '.lck'], 'file') == 2
+                if exist([JobName2, '.lck'], 'file') ~= 2
                     cmd6 = sprintf('abaqus job= %s terminate', JobName2); 
                     disp('Job2 terminado com sucesso by full analysis!');
                     SubmitWork2 = 0;
