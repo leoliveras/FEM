@@ -12,7 +12,7 @@ JobName2 = 'VMTRS_job2';
 numCPU = 1;
 
 % User and Work Folders
-inputFolder = 'C:\Users\LOESF\OneDrive\Documents\Truss_Element\ML\TESTE\MATLAB';   
+inputFolder = 'C:\Users\ABC';  ---> ABC is your unziped directory folder   
 tempFolder  = 'C:\temp';  %this is the work Folder used by abaqus
 
 if ~exist(inputFolder,'dir'); mkdir(inputFolder); end
@@ -173,4 +173,5 @@ while SubmitWork || SubmitWork2
 end
 
 disp('Monitoramento concluído com sucesso!');
+
 
