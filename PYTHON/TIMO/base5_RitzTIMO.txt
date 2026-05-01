@@ -1,0 +1,25 @@
+# Funções de aproximação Timoshenko
+# Ordem 1
+v1 = a11*x*(L - x)
+gamma1 = b11*x*(L - x)
+phi1 = gamma1 - diff(v1, x)
+
+# Ordem 2
+v2 = a21*x*(L - x) + a22*x**2*(L - x)
+gamma2 = b21*x*(L - x) + b22*x**2*(L - x)
+phi2 = gamma2 - diff(v2, x)
+
+# Ordem 3
+v3 = a31*x*(L - x) + a32*x**2*(L - x) + a33*x**3*(L - x)
+gamma3 = b31*x*(L - x) + b32*x**2*(L - x) + b33*x**3*(L - x)
+phi3 = gamma3 - diff(v3, x)
+
+# Ordem 4
+v4 = a41*x*(L - x) + a42*x**2*(L - x) + a43*x**3*(L - x) + a44*x**4*(L - x)
+gamma4 = b41*x*(L - x) + b42*x**2*(L - x) + b43*x**3*(L - x) + b44*x**4*(L - x)
+phi4 = gamma4 - diff(v4, x)
+
+# Ordem 5
+v5 = a51*x*(L - x) + a52*x**2*(L - x) + a53*x**3*(L - x) + a54*x**4*(L - x) + a55*x**5*(L - x)
+gamma5 = b51*x*(L - x) + b52*x**2*(L - x) + b53*x**3*(L - x) + b54*x**4*(L - x) + b55*x**5*(L - x)
+phi5 = gamma5 - diff(v5, x)

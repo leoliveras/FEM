@@ -1,0 +1,16 @@
+# Funções de aproximação Timoshenko
+# Ordem 1
+v1 = a11*x*(L - x)
+phi1 = x**2*(L-x)**2*(b11)
+
+# Ordem 2
+v2 = a21*x*(L - x) + a22*x**2*(L - x)
+phi2 = x**2*(L-x)**2*(b21 + b22*x)
+
+# Ordem 3
+v3 = a31*x*(L - x) + a32*x**2*(L - x) + a33*x**3*(L - x)
+phi3 = x**2*(L-x)**2*(b31 + b32*x + b33*x**2)
+
+# Ordem 4
+v4 = a41*x*(L - x) + a42*x**2*(L - x) + a43*x**3*(L - x) + a44*x**4*(L - x)
+phi4 = x**2*(L-x)**2*(b41 + b42*x + b43*x**2 + b44*x**3)
