@@ -30,9 +30,13 @@ SUBROUTINE INCLOD
    end do
 
 !  UPDATE COORDINATES WITH DISPLACEMENTS
-!    do  INODE=1, NNODE
-!        IPOIN=(INODE-1)*NDOFN+1
-!        COORD(INODE,1) = COORD(INODE,1) + XDISP(IPOIN)
-!        COORD(INODE,2) = COORD(INODE,2) + XDISP(IPOIN+1)
-!    end do
+   if(GRESL == 1) then 
+       do  IPOIN=1, NPOIN
+            IDOFN=(IPOIN-1)*NDOFN+1
+            COORD(IPOIN,1) = COORD(IPOIN,1) + XDISP(IDOFN)
+            COORD(IPOIN,2) = COORD(IPOIN,2) + XDISP(IDOFN+1)
+       end do
+       XDISP = 0
+   end if 
+   
 END SUBROUTINE INCLOD
