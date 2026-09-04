@@ -32,6 +32,7 @@ SUBROUTINE INITAL
     allocate(XAREA(NELEM)); XAREA = 0.d0;
     allocate(YOUNG(NELEM)); YOUNG = 0.d0;
     allocate(ELENG(NELEM)); ELENG = 0.d0;
+    allocate(LENG0(NELEM)); ELENG = 0.d0;
     allocate(STRAN(NELEM)); STRAN = 0.d0;
     allocate(TSTRN(NELEM)); TSTRN = 0.d0;   
     allocate(VIVEL(NELEM)); VIVEL = 0.d0; 
