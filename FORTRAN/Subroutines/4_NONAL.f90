@@ -8,7 +8,7 @@ SUBROUTINE NONAL
    ! Default mode is viscoplastic in the undeformed position
    KRESL = 2  !Sets default indicator for linear solution
    HRESL = 2  !Sets default indicator for material solution  
-              !Sets default indicator for posititional solution  
+   GRESL = 0  !Sets default indicator for posititional solution  
 
    if (NALGO == 1) KRESL = 1
    if (NALGO == 2) KRESL = 1
@@ -22,6 +22,8 @@ SUBROUTINE NONAL
    if (HALGO == 2) HRESL = 2
    if (HALGO == 3) HRESL = 3
    if (HALGO == 4) HRESL = 4
+   
+   if (GALGO == 1) GRESL = 1
 
    if (ISTEP == 1 .or. NALGO == 1) then
       do ISVAB = 1, NSVAB
