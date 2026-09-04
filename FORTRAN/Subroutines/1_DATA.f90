@@ -6,7 +6,7 @@ SUBROUTINE DATA
 !Read data file
 !**************************************************************************************************
 
-open(1, file="./Example_OWEN.txt", STATUS="old")
+open(1, file="./Example_CRISFIELD.txt", STATUS="old")
 
 
 !**************************************************************************************************
@@ -26,14 +26,16 @@ open(1, file="./Example_OWEN.txt", STATUS="old")
     read(1,*)label,NALGO
     read(1,*)label,NDOFN
     read(1,*)label,HALGO
+    read(1,*)label,GALGO
     read(1,*)label,EPATH
     
     MINCS=NINCS
 
     write(*,'(//,1X,"NPOIN =",I5,3X,"NELEM =",I5,3X,"NBOUN =",I5,3X,&
                     "NMATS =",I5,3X,"NPROP =",I5,3X,"NNODE =",I5,3X,&
-                    "NINCS =",I5,3X,"NALGO =",I5,3X,"NDOFN =",I5)') &
-                    NPOIN,NELEM,NBOUN,NMATS,NPROP,NNODE,NINCS,NALGO,NDOFN
+                    "NINCS =",I5,3X,"NALGO =",I5,3X,"GALGO =",I5,3X,&
+                    "NDOFN =",I5)') &
+                    NPOIN,NELEM,NBOUN,NMATS,NPROP,NNODE,NINCS,NALGO,GALGO,NDOFN
 
     NEVAB = NDOFN * NNODE   !Number of element variables
     NSVAB = NDOFN * NPOIN   !Number of structural variables
