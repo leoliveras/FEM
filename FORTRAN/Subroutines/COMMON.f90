@@ -14,6 +14,7 @@
         integer(4)::NALGO=0                 
         integer(4)::NDOFN=0  
         integer(4)::HALGO=0
+        integer(4)::GALGO=0
         integer(4)::EPATH=0
         integer(4)::MINCS=0
         
@@ -62,8 +63,11 @@
         real(8),Allocatable::COEFF(:);
         real(8),Allocatable::teste(:,:)
         real(8)::FMULT=0.d0
+        real(8)::FMULT1=0.d0
+        real(8)::FMULT2=0.d0
                                             
-        real(8),Allocatable::ELENG(:)         
+        real(8),Allocatable::ELENG(:)
+        real(8),Allocatable::LENG0(:)  
         real(8),Allocatable::STRAN(:)
         real(8),Allocatable::TSRAN(:)
         real(8),Allocatable::TSTRN(:)
@@ -86,6 +90,7 @@
         real(8)::FACTO=0.d0          
         integer(4)::KRESL=0
         integer(4)::HRESL=0
+        integer(4)::GRESL=0
         real(8),Allocatable::FIXED(:)
         
         
@@ -138,8 +143,13 @@
         real(8),allocatable::VIVEL(:)
         
         !Nonlinear elasticity       
-        real(8)::PTRAN=0.d0
-        real(8)::STRCH=0.d0
+        real(8)::PTRAN = 0.d0
+        real(8)::STRCH = 0.d0
+        real(8)::DXCUR = 0.d0
+        real(8)::DYCUR = 0.d0
+        real(8)::LTRIL = 0.d0
+        real(8)::CTRIL = 0.d0
+        real(8)::STRIL = 0.d0
         
         !Elastoplastic
         REAL(8)::STLIN = 0.d0
