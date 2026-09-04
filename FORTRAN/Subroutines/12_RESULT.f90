@@ -52,34 +52,43 @@ SUBROUTINE RESULT
 ! *** EQUILIBRIUM PATH OUTPUT FOR POST-PROCESSING
 !********************************************************************
     
-!     OWEN
-    if (EPATH ==1) then
-        RFOOT(IINCS) =  TLOAD(2,3)   ! TLOAD: element 2, dof 1 of node 1 is 1, dof 2 of node 1 is 2,  dof 1 of node 2 is 3, dof 2 of node 2 is 4
-        UNODE(IINCS) =  TDISP(3,1)   ! TDISP: node 3, dof 1 (x)
-        call Sleep(3)
-    end if
+    !! OWEN
+    !if (EPATH ==1) then
+    !    RFOOT(IINCS) =  TLOAD(13,1)   ! TLOAD: element 2, dof 1 of node 1 is 1, dof 2 of node 1 is 2,  dof 1 of node 2 is 3, dof 2 of node 2 is 4
+    !    UNODE(IINCS) =  TDISP(13,2)   ! TDISP: node 3, dof 1 (x)
+    !end if
        
     !! PROENCA
     !if (EPATH ==1) then
     !    RFOOT(IINCS) = TLOAD(2,4)   ! TLOAD: element 2, dof 1 of node 1 is 1, dof 2 of node 1 is 2,  dof 1 of node 2 is 3, dof 2 of node 2 is 4
     !    UNODE(IINCS) = TDISP(4,2)   ! TDISP: node 4, dof 2 (y)
-    !    !call Sleep(3)
     !end if
     
     ! MUNAIAR
     !if (EPATH ==1) then
     !    RFOOT(IINCS) = -TLOAD(5,4)   ! TLOAD: element 5, dof 1 of node 1 is 1, dof 2 of node 1 is 2,  dof 1 of node 2 is 3, dof 2 of node 2 is 4
     !    UNODE(IINCS) = -TDISP(6,2)   ! TDISP: node 6, dof 2 (y)
-    !    call Sleep(3)
     !end if
     !
     !! TVM
     !if (EPATH ==1) then
     !    RFOOT(IINCS) = -TLOAD(1,4)   ! TLOAD: element 1, dof 1 of node 1 is 1, dof 2 of node 1 is 2,  dof 1 of node 2 is 3, dof 2 of node 2 is 4
     !    UNODE(IINCS) = -TDISP(2,2)   ! TDISP: node 2, dof 2 (y)
-    !    !call Sleep(3)
     !end if
     
+    !! CODA
+    !if (EPATH ==1) then
+    !    RFOOT(IINCS) =  TLOAD(23,3)   ! TLOAD: element 2, dof 1 of node 1 is 1, dof 2 of node 1 is 2,  dof 1 of node 2 is 3, dof 2 of node 2 is 4
+    !    UNODE(IINCS) =  TDISP(13,2)   ! TDISP: node 3, dof 1 (x)
+    !end if
+    
+    ! CRISFIELD
+    if (EPATH ==1) then
+        RFOOT(IINCS) =  TLOAD(30,4)   ! TLOAD: element 2, dof 1 of node 1 is 1, dof 2 of node 1 is 2,  dof 1 of node 2 is 3, dof 2 of node 2 is 4
+        UNODE(IINCS) =  TDISP(32,2)   ! TDISP: node 3, dof 1 (x)
+    end if
+    
+    ! *.txt Output Newton Raphson
     if (IINCS == NINCS) STOP1 = 1
     if (EPATH == 1 .AND. STOP1 == 1) then
         ! Output file for equilibrium path
@@ -88,12 +97,67 @@ SUBROUTINE RESULT
         open(unit=GUNIT, file=FNAME, status="unknown")
 
         do JINCS = 1, MINCS
-            write(GUNIT,'(F12.6,10X,F12.6)') RFOOT(JINCS), UNODE(JINCS)
+            write(GUNIT,'(F15.6,10X,F12.6)') RFOOT(JINCS), UNODE(JINCS)
         end do
         close(GUNIT)
         STOP1 = 1
         if (NCHEK == 0) write(*,'(//,1X,"EQUILIBRIUM PATH FILE GENERATED: ",A)') FNAME
     end if
     !if (stop1 == 1) call Sleep(3000)
+
+    
+    !Acadview Newton Raphson
+    if (EPATH ==1 .AND. IINCS ==1 .AND. ISTEP == 1) then
+        write(*,*)
+        write(*,*)"Open Acadview_Newton_Raphson file"
+
+         open(Unit=10,File="Acadview_Newton_Raphson.txt")
+            write(10,'("Acadview")')
+            write(10,*)
+            write(10,'("Number of nodes, Number of elements, Number of lists")')
+            write(10,'("#")')
+            write(10,*)NPOIN,NELEM,3*NINCS
+            write(10,*)
+            write(10,'("x1, x2, x3, u1, u2, u3")')
+            write(10,'("#")')
+            do IPOIN=1,NPOIN
+                write(10,'(6(f20.10))') COORD(IPOIN,1),COORD(IPOIN,2),0.0,0.d0,0.d0,0.d0
+            end do
+            write(10,*)
+            write(10,'("Truss element, Degree of aproximation, Nodes of element")')
+            write(10,'("#")')
+            do IELEM=1,NELEM
+                write(10,'(10(i5))')1,1,(LNODS(IELEM,INODE),INODE=1,2)
+            end Do
+    end if
+    
+    
+    if (EPATH == 1 .AND. NCHEK == 0) then
+        !Acadview - List of displacements
+        write(10,*)
+        write(10,'("List of Displacements")')
+        write(10,*)
+        write(10,'("#")')
+        write(10,'("u1 - Increment",i5)') IINCS
+        do IPOIN=1,NPOIN
+            write(10,'(4(es20.10))') TDISP(IPOIN,1),TDISP(IPOIN,2),0.0,TDISP(IPOIN,1)
+        end do
+        write(10,*)
+        write(10,'("#")')
+        write(10,'("u2 - Increment",i5)') IINCS
+        do IPOIN=1,NPOIN
+            write(10,'(4(es20.10))') TDISP(IPOIN,1),TDISP(IPOIN,2),0.0,TDISP(IPOIN,2)
+        end do
+        write(10,*)
+        write(10,'("#")')
+        write(10,'("u3 - Increment",i5)') IINCS
+        do IPOIN=1,NPOIN
+            write(10,'(4(es20.10))') TDISP(IPOIN,1),TDISP(IPOIN,2),0.0,0.0
+        end do
+            
+        if (NCHEK == 0) write(*,'(//,1X,"ACAVIEW WRITED FOR THIS INCREMENT")')
+    end if
+
+    
 
 END SUBROUTINE RESULT
